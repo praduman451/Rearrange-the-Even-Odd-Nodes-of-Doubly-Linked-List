@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include <stdlib.h>
+
+struct Node
+{
+  int data;
+  struct Node *next;
+  struct Node *prev;
+};
+
+struct Node* insertEnd(struct Node* head, int data)
+{
+  struct Node* node = (struct Node*) malloc(sizeof(struct Node));
+  struct Node *last = head;
+  node->data  = data;                //  Insert data in new node
+  node->next = NULL;                 // link new node to NULL as it is last node
+  if (head == NULL)                  // if list is empty add in beginning.
+  {
+    head = node;
+    node->prev=NULL;
+    return head;
+  }
+  while (last->next != NULL)           // Find the last node
+    last = last->next;
+  last->next = node;  
+  node->prev=last;
+  return head;
+}
+
+// This function prints contents of linked list starting from head
+
+void printList(struct Node *node)
+{
+  while (node != NULL)
+  {
+    printf("%d ", node->data);
+    node = node->next;
+  }
+}
+
+struct Node* rearrangeList(struct Node* head)
+{
+    struct Node *s1 = head, *s2 = head;
+    int count = 1;
+    while(s1!=NULL)
+    {
+        if(count%2 == 0)
+        {
+            printf("%d ",s1->data);
+        }
+        s1 = s1->next;
+        count++;
+    }
+    count = 1;
+    while(s2!=NULL)
+    {
+        if(count%2 != 0)
+        {
+            printf("%d ",s2->data);
+        }
+        s2 = s2->next;
+        count++;
+    }
+    return NULL;}
+    
+ int main()
+{
+  int t;
+  scanf("%d",&t);
+  while(t--)
+  {
+    struct Node* head = NULL;
+    struct Node* t1;
+    int n, m;
+    scanf("%d", &n);
+    while(n--)
+    {
+      scanf("%d", &m);
+      head = insertEnd(head, m);
+    }
+    t1 = rearrangeList(head);
+    printList(t1);
+    printf("\n");
+  }
+  return 0;
+}
